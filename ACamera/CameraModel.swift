@@ -90,13 +90,14 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
         
         self.output.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global().async {
             
             self.session.stopRunning()
             
             DispatchQueue.main.async {
                 
                 withAnimation{self.isTaken.toggle()}
+                self.reTake()
             }
         }
     }
@@ -110,6 +111,7 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
             DispatchQueue.main.async {
                 withAnimation{self.isTaken.toggle()}
             }
+            
         }
     }
     
@@ -117,14 +119,17 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
         print("reached")
         
         if error != nil{
-            return
+            print(error!)
         }
-        
+        print("image taken")
         guard let imageData = photo.fileDataRepresentation() else{return}
         
         guard let uiImage = UIImage(data: imageData) else {return}
         
+        
         self.image = uiImage
         
+    
+        UIImageWriteToSavedPhotosAlbum(self.image, nil, nil, nil)
     }
 }

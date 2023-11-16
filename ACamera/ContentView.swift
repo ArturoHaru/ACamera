@@ -23,7 +23,9 @@ struct ContentView: View {
                         .fill(.secondary)
                         .frame(width: 50,height: 50)
                     Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {
+                        camera.takePic()
+                        camera.reTake()}, label: {
                         ZStack{
                             
                             Circle()
