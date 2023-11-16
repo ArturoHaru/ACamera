@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var camera = CameraModel()
+    
     var body: some View {
         ZStack{
             Color.black
                 .ignoresSafeArea()
             VStack{
                 Spacer()
+                CameraPreview(camera: camera)
                 HStack{
                     Rectangle()
                         .fill(.secondary)
@@ -48,6 +52,8 @@ struct ContentView: View {
                 }
                 .padding()
             }
+        }.onAppear(){
+            camera.Check()
         }
     }
 }
