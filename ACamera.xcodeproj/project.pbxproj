@@ -11,6 +11,8 @@
 		4E3B82D42B066E21009620F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3B82D32B066E21009620F0 /* ContentView.swift */; };
 		4E3B82D62B066E22009620F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E3B82D52B066E22009620F0 /* Assets.xcassets */; };
 		4E3B82D92B066E22009620F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E3B82D82B066E22009620F0 /* Preview Assets.xcassets */; };
+		4E3B82E02B066FDE009620F0 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3B82DF2B066FDE009620F0 /* CameraModel.swift */; };
+		4E3B82E22B06702D009620F0 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3B82E12B06702D009620F0 /* CameraPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		4E3B82D32B066E21009620F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4E3B82D52B066E22009620F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E3B82D82B066E22009620F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4E3B82DF2B066FDE009620F0 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
+		4E3B82E12B06702D009620F0 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 				4E3B82D32B066E21009620F0 /* ContentView.swift */,
 				4E3B82D52B066E22009620F0 /* Assets.xcassets */,
 				4E3B82D72B066E22009620F0 /* Preview Content */,
+				4E3B82DF2B066FDE009620F0 /* CameraModel.swift */,
+				4E3B82E12B06702D009620F0 /* CameraPreview.swift */,
 			);
 			path = ACamera;
 			sourceTree = "<group>";
@@ -138,7 +144,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E3B82D42B066E21009620F0 /* ContentView.swift in Sources */,
+				4E3B82E22B06702D009620F0 /* CameraPreview.swift in Sources */,
 				4E3B82D22B066E21009620F0 /* ACameraApp.swift in Sources */,
+				4E3B82E02B066FDE009620F0 /* CameraModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
