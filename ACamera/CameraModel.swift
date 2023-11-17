@@ -32,6 +32,7 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
     @State var devicePosition = AVCaptureDevice.Position.back
     @State var deviceType = AVCaptureDevice.DeviceType.builtInDualWideCamera
     
+    
     func Check(){
         
         // first checking camerahas got permission...
@@ -64,8 +65,10 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
         session.removeInput(input!)
         self.session.commitConfiguration()
         self.setUp()
-        
-        
+    }
+    
+    func toggleFlash(){
+        flashEnabled.toggle()
     }
     
     func setUp(){
@@ -80,6 +83,7 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
             // change for your own...
             
             let device = AVCaptureDevice.default(frontCameraEnabled ? .builtInWideAngleCamera : .builtInDualWideCamera, for: .video, position: frontCameraEnabled ? .front : .back)
+   
             print(frontCameraEnabled)
             print(frontCameraEnabled ? AVCaptureDevice.DeviceType.builtInWideAngleCamera : AVCaptureDevice.DeviceType.builtInDualWideCamera)
             print(frontCameraEnabled ? AVCaptureDevice.Position.front.rawValue : AVCaptureDevice.Position.back.rawValue)
@@ -114,6 +118,9 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
     // take and retake functions...
     
     func takePic(){
+        
+        let settings = AVCapturePhotoSettings()
+        settings.flashMode = flashEnabled ? .on : .off
         
         self.output.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
         //self.session.stopRunning()
