@@ -25,6 +25,13 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
     
     @Published var image = UIImage()
     
+    @Published var flashEnabled = false
+    @Published var frontCameraEnabled = true
+    
+    @Published var input: AVCaptureDeviceInput?
+    @State var devicePosition = AVCaptureDevice.Position.back
+    @State var deviceType = AVCaptureDevice.DeviceType.builtInDualWideCamera
+    
     func Check(){
         
         // first checking camerahas got permission...
@@ -50,6 +57,17 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
         }
     }
     
+    func turnCamera(){
+        frontCameraEnabled.toggle()
+        self.session.stopRunning()
+        session.beginConfiguration()
+        session.removeInput(input!)
+        self.session.commitConfiguration()
+        self.setUp()
+        
+        
+    }
+    
     func setUp(){
         
         // setting up camera...
@@ -61,14 +79,16 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
             
             // change for your own...
             
-            let device = AVCaptureDevice.default(.builtInDualWideCamera, for: .video, position: .back)
-            
-            let input = try AVCaptureDeviceInput(device: device!)
+            let device = AVCaptureDevice.default(frontCameraEnabled ? .builtInWideAngleCamera : .builtInDualWideCamera, for: .video, position: frontCameraEnabled ? .front : .back)
+            print(frontCameraEnabled)
+            print(frontCameraEnabled ? AVCaptureDevice.DeviceType.builtInWideAngleCamera : AVCaptureDevice.DeviceType.builtInDualWideCamera)
+            print(frontCameraEnabled ? AVCaptureDevice.Position.front.rawValue : AVCaptureDevice.Position.back.rawValue)
+            input = try AVCaptureDeviceInput(device: device!)
             
             // checking and adding to session...
             
-            if self.session.canAddInput(input){
-                self.session.addInput(input)
+            if self.session.canAddInput(input!){
+                self.session.addInput(input!)
             }
             
             // same for output....
@@ -77,7 +97,14 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
                 self.session.addOutput(self.output)
             }
             
+            session.sessionPreset = .photo
+            
             self.session.commitConfiguration()
+            
+            DispatchQueue.global(qos: .background).async {
+                self.session.startRunning()
+                
+            }
         }
         catch{
             print(error.localizedDescription)
@@ -89,15 +116,15 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
     func takePic(){
         
         self.output.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+        //self.session.stopRunning()
+        self.reTake()
         
         DispatchQueue.global().async {
             
-            self.session.stopRunning()
             
             DispatchQueue.main.async {
                 
                 withAnimation{self.isTaken.toggle()}
-                self.reTake()
             }
         }
     }
@@ -105,7 +132,6 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
     func reTake(){
         
         DispatchQueue.global(qos: .background).async {
-            
             self.session.startRunning()
             
             DispatchQueue.main.async {
@@ -120,10 +146,12 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
         
         if error != nil{
             print(error!)
+            return
         }
-        print("image taken")
-        guard let imageData = photo.fileDataRepresentation() else{return}
         
+        guard let imageData = photo.fileDataRepresentation() else{return}
+        print("image taken")
+
         guard let uiImage = UIImage(data: imageData) else {return}
         
         
@@ -131,5 +159,6 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
         
     
         UIImageWriteToSavedPhotosAlbum(self.image, nil, nil, nil)
+        print("image saved")
     }
 }

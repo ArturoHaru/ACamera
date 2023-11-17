@@ -92,6 +92,8 @@
 			dependencies = (
 			);
 			name = ACamera;
+			packageProductDependencies = (
+			);
 			productName = ACamera;
 			productReference = 4E3B82CE2B066E21009620F0 /* ACamera.app */;
 			productType = "com.apple.product-type.application";
@@ -120,6 +122,8 @@
 				Base,
 			);
 			mainGroup = 4E3B82C52B066E21009620F0;
+			packageReferences = (
+			);
 			productRefGroup = 4E3B82CF2B066E21009620F0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
