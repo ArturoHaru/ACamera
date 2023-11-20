@@ -73,14 +73,11 @@ class CameraModel: NSObject,ObservableObject,AVCapturePhotoCaptureDelegate{
     
     func setUp(){
         
-        // setting up camera...
         
         do{
             
-            // setting configs...
             self.session.beginConfiguration()
             
-            // change for your own...
             
             let device = AVCaptureDevice.default(frontCameraEnabled ? .builtInWideAngleCamera : .builtInDualWideCamera, for: .video, position: frontCameraEnabled ? .front : .back)
    

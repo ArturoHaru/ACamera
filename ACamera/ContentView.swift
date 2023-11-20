@@ -33,6 +33,8 @@ struct ContentView: View {
                             .foregroundStyle(.white)
                             .padding()
                     })
+                    .accessibilityLabel("Flash")
+                    .accessibilityHint(camera.flashEnabled ? "Flash is enabled" : "Flash is disabled")
                     Spacer()
                 }
                 CameraPreview(camera: camera)
@@ -74,6 +76,8 @@ struct ContentView: View {
                                         .frame(width: 70, height: 70)
                                 }
                             })
+                        .accessibilityLabel("Take Picture")
+                        
                         Spacer()
                         Button(action: {
                             camera.turnCamera()
@@ -90,6 +94,8 @@ struct ContentView: View {
                                     .foregroundStyle(.white)
                             }
                         })
+                        .accessibilityLabel("Switch Camera")
+                        .accessibilityHint(camera.frontCameraEnabled ? "Front Camera Enabled" : "Back Camera Enabled")
                     }
                     .padding()
                     .padding(.bottom, 20)
